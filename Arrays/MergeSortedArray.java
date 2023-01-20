@@ -50,7 +50,9 @@ import java.util.*;
  */
 
 public class MergeSortedArray {
+    // LEETCODE que. solution
     public static void merge(int[] nums1, int m, int[] nums2, int n) {
+        // tc => O(n+m) sc => O(1)
         int i = m - 1, j = n - 1, k = m + n - 1;
         // start traversing from end and check which one is bigger
         while (j >= 0) {
@@ -62,12 +64,116 @@ public class MergeSortedArray {
         }
     }
 
+    /*
+     * Merge two sorted arrays in which first array should have smaller elements
+     * than second array
+     * Example input: ar1 => [1,4,7,8,10] & ar2 => [2,3,9]
+     * output: ar1 => [1,2,3,4,7] & ar2 => [8,9,10]
+     */
+    public static void mergeBruteForce(int[] a, int[] b) {
+        // tc => O(n+m) & sc => O(n+m)
+        int m = a.length, n = b.length;
+        int temp[] = new int[m + n];
+        int i = 0, j = 0, k = 0;
+        while (i < m && j < n) {
+            if (a[i] < b[j]) {
+                temp[k++] = a[i++];
+            } else {
+                temp[k++] = b[j++];
+            }
+        }
+        while (i < m) {
+            temp[k++] = a[i++];
+        }
+        while (j < n) {
+            temp[k++] = b[j++];
+        }
+        i = 0;
+        j = 0;
+        k = 0;
+        while (i < m) {
+            a[i++] = temp[k++];
+        }
+        // k--;
+        while (j < n) {
+            b[j++] = temp[k++];
+        }
+    }
+
+    public static void mergeBruteForceNoExtraSpace(int[] a, int[] b) {
+        // tc => O(n*m) & sc => O(1)
+        int m = a.length, n = b.length, i = 0, j = 0;
+        while (i < m && j < n) {
+            // if we found large element in first array we'll swap it to second array
+            if (a[i] > b[j]) {
+                int t = a[i];
+                a[i] = b[j];
+                b[j] = t;
+
+                // after swapping we've to mainatin the secode array sorted
+                // so we'll sort that array to correct order
+                for (int k = j; k < n - 1; k++) {
+                    if (b[k] > b[k + 1]) {
+                        int temp = b[k];
+                        b[k] = b[k + 1];
+                        b[k + 1] = temp;
+                    } else {
+                        break;
+                    }
+                }
+            } else {
+                i++;
+            }
+        }
+    }
+
+    // In this Gap Algorithm, we'll find the half of both array's lengths (m+n)
+    // and traverse both the arrays as they are in a single line until the gap
+    // becomes 0 we'll keep dividing the gap by 2
+    // and we'll swap the elements if the right pointer will be smaller than left
+
+    public static void mergeBetterNoExtraSpace(int[] a, int[] b) {
+        // GAP ALGORITHM / Shell Short Algorithm
+        // tc => O((n+m)log(n+m)) & sc => O(1)
+        int m = a.length, n = b.length, gap = (int) Math.ceil((n + m) / 2.0);
+        int l = 0, r = 0;
+        while (gap > 0) {
+            l = 0;
+            r = gap;
+            while (r < (m + n)) {
+                if (r < m && a[l] > a[r]) {
+                    int t = a[l];
+                    a[l] = a[r];
+                    a[r] = t;
+                } else if (r >= m && l < m && a[l] > b[r - m]) {
+                    int t = a[l];
+                    a[l] = b[r - m];
+                    b[r - m] = t;
+                } else if (r >= m && l >= m && b[l - m] > b[r - m]) {
+                    int t = b[l - m];
+                    b[l - m] = b[r - m];
+                    b[r - m] = t;
+                }
+                l++;
+                r++;
+            }
+            gap = (gap == 1) ? 0 : (int) Math.ceil(gap / 2.0);
+        }
+    }
+
     // driver code
     public static void main(String[] args) {
-        int m = 3, n = 3;
-        int[] arr = { 1, 4, 6, 0, 0, 0 };
-        int[] arr1 = { 2, 3, 5 };
-        merge(arr, m, arr1, n); // 1 2 3 4 5 6
-        System.out.println(Arrays.toString(arr));
+        // int m = 3, n = 3;
+        // int[] arr = { 1, 4, 6, 0, 0, 0 };
+        // int[] arr1 = { 2, 3, 5 };
+        // merge(arr, m, arr1, n); // 1 2 3 4 5 6
+        // System.out.println(Arrays.toString(arr));
+        int[] a = { 1, 4, 7, 8, 10 };
+        int[] b = { 2, 3, 9 };
+        // mergeBruteForce(a, b);
+        // mergeBruteForceNoExtraSpace(a, b);
+        mergeBetterNoExtraSpace(a, b);
+        System.out.println(Arrays.toString(a));
+        System.out.println(Arrays.toString(b));
     }
 }
