@@ -85,10 +85,10 @@ public class UniqueGridPaths {
         // tc => O(m) sc => O(1)
         int N = m + n - 2;
         int r = m - 1;
-        double res = 1;
+        long res = 1;
         // using formula nCr = 10C3 = 10*9*8/1*2*3
         for (int i = 1; i <= r; i++) {
-            res *= (N - r + i) / i;
+            res = res * (N - r + i) / i;
         }
         return (int) res;
     }
