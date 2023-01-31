@@ -54,11 +54,6 @@ public class SubarraySumEqualsK {
             }
             map.put(preSum[i], map.getOrDefault(preSum[i], 0) + 1);
         }
-
-        for (Integer i : map.keySet()) {
-            System.out.print(i + " ");
-        }
-        System.out.println();
         return cnt;
     }
 
@@ -102,7 +97,7 @@ public class SubarraySumEqualsK {
         int[] arr = { 1, 3, -2, 1, 4, 6, -5, 7, -9, 8, 1 };
         int[] arr2 = { 1, 1, 1, 1, 1 };
         int k = 2;
-        System.out.println(subarraySumBruteForce(arr2, k));
+        System.out.println(subarraySumBruteForce(arr, k));
         System.out.println(subarraySum(arr2, k));
     }
 }
