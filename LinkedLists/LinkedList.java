@@ -2,23 +2,24 @@ package LinkedLists;
 
 class LinkedList {
     ListNode head;
+    ListNode tail;
 
     public LinkedList() {
 
     }
 
-    class ListNode {
+    static class ListNode {
         int val;
         ListNode next;
 
-        ListNode() {
+        public ListNode() {
         }
 
-        ListNode(int val) {
+        public ListNode(int val) {
             this.val = val;
         }
 
-        ListNode(int val, ListNode next) {
+        public ListNode(int val, ListNode next) {
             this.val = val;
             this.next = next;
         }
@@ -28,13 +29,11 @@ class LinkedList {
         ListNode node = new ListNode(val);
         if (head == null) {
             head = node;
+            tail = node;
             return;
         }
-        ListNode temp = head;
-        while (temp.next != null) {
-            temp = temp.next;
-        }
-        temp.next = node;
+        tail.next = node;
+        tail = node;
     }
 
     public void display() {
@@ -49,4 +48,32 @@ class LinkedList {
         System.out.print("null");
         System.out.println();
     }
+
+    public void addCirclular(int value) {
+        ListNode node = new ListNode(value);
+        if (this.head == null) {
+            this.head = node;
+            this.tail = node;
+            return;
+        }
+        this.tail.next = node;
+        node.next = this.head;
+        this.tail = node;
+    }
+
+    public void displayCircular() {
+        ListNode node = this.head;
+        if (this.head != null) {
+            do {
+                System.out.print(node.val + " -> ");
+                node = node.next;
+            } while (node != this.head);
+            System.out.print("Cycle");
+        } else {
+            System.out.println("null");
+        }
+
+        System.out.println();
+    }
+
 }

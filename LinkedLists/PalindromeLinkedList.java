@@ -18,9 +18,7 @@ public class PalindromeLinkedList {
         // If fast == null then the list contains of even
         // number of nodes otherwise of odd one.
         // Slow pointer always points at node with index n / 2 + 1.
-        ListNode slow = head;
-        ListNode fast = head;
-        ListNode rev = null;
+        ListNode slow = head, fast = head, rev = null;
         while (fast != null && fast.next != null) {
             ListNode temp = rev;
             rev = slow;
@@ -37,8 +35,9 @@ public class PalindromeLinkedList {
 
         // Compare these 2 lists element by element.
         while (slow != null) {
-            if (rev.val != slow.val)
+            if (rev.val != slow.val) {
                 return false;
+            }
             rev = rev.next;
             slow = slow.next;
         }
@@ -55,7 +54,6 @@ public class PalindromeLinkedList {
         list.addLast(3);
         list.addLast(2);
         list.addLast(1);
-        list.display();
         System.out.println(isPalindrome(list.head));
     }
 }
