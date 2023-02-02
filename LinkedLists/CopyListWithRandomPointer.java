@@ -28,7 +28,7 @@ public class CopyListWithRandomPointer {
             return null;
         }
 
-        // First round: make copy of each node,
+        // First step: make copy of each node,
         // and link them together side-by-side in a single list.
         Node iter = head, next;
         while (iter != null) {
@@ -40,7 +40,7 @@ public class CopyListWithRandomPointer {
         }
         iter = head;
 
-        // Second round: assign random pointers for the copy nodes.
+        // Second step: assign random pointers for the copy nodes.
         while (iter != null) {
             if (iter.random != null) {
                 iter.next.random = iter.random.next;
@@ -48,7 +48,7 @@ public class CopyListWithRandomPointer {
             iter = iter.next.next;
         }
 
-        // Third round: restore the original list, and extract the copy list.
+        // Third step: restore the original list, and extract the copy list.
         Node original = head, clone = head.next, cloneAns = original.next;
         while (clone.next != null) {
             Node nextOriginal = original.next.next;
