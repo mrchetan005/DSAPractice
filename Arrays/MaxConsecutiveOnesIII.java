@@ -8,8 +8,8 @@ package Arrays;
 /*
        * we can do this with sliding window algorithm
        * take two pointers left and right
-       * if (arr[left] == 0) then decrement k (i.e. flip's count) 
-       * if m becomes negative keep moving left until arr[left] equals 0
+       * if (arr[right] == 0) then decrement k (k is flip's count) 
+       * if k becomes negative keep moving left until arr[left] equals 0
        * if we found arr[left] equals 0 increment k
        * return (right - left) because this window contains maximum number of ones produced by flipping at most k 0s...
 */
