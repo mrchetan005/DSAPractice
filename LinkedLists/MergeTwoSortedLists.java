@@ -4,7 +4,7 @@ import LinkedLists.LinkedList.ListNode;
 
 public class MergeTwoSortedLists {
     public static ListNode mergeTwoLists(ListNode list1, ListNode list2) {
-        // iterative solution
+        // iterative solution tc => O(n) & sc => O(n)
         ListNode dummyHead = new ListNode();
         ListNode tail = dummyHead;
         while (list1 != null && list2 != null) {
@@ -26,9 +26,37 @@ public class MergeTwoSortedLists {
         return dummyHead.next;
     }
 
+    public static ListNode mergeTwoListsInPlace(ListNode list1, ListNode list2) {
+        if (list1 == null) {
+            return list2;
+        } else if (list2 == null) {
+            return list1;
+        }
+        if (list1.val > list2.val) {
+            ListNode temp = list1;
+            list1 = list2;
+            list2 = temp;
+        }
+        ListNode ans = list1;
+        while (list1 != null && list2 != null) {
+            ListNode temp = null;
+            while (list1 != null && list1.val <= list2.val) {
+                temp = list1;
+                list1 = list1.next;
+            }
+            temp.next = list2;
+
+            // swap
+            ListNode t = list1;
+            list1 = list2;
+            list2 = t;
+        }
+        return ans;
+    }
+
     public static ListNode mergeTwoListsRec(ListNode list1, ListNode list2) {
 
-        // recursive solution
+        // recursive solution tc => O(n) & stack sc => O(n)
         if (list1 == null) {
             return list2;
         }
@@ -58,7 +86,9 @@ public class MergeTwoSortedLists {
         list2.display();
         // list1.head = mergeTwoLists(list1.head, list2.head);
         // list1.display();
-        list1.head = mergeTwoListsRec(list1.head, list2.head);
+        list1.head = mergeTwoListsInPlace(list1.head, list2.head);
         list1.display();
+        // list1.head = mergeTwoListsRec(list1.head, list2.head);
+        // list1.display();
     }
 }
