@@ -38,6 +38,7 @@ class LinkedList {
 
     public void display() {
         if (head == null) {
+            System.out.println("List is empty!");
             return;
         }
         ListNode temp = head;
@@ -72,7 +73,6 @@ class LinkedList {
         } else {
             System.out.println("null");
         }
-
         System.out.println();
     }
 
