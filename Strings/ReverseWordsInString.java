@@ -47,26 +47,58 @@ package Strings;
  */
 
 public class ReverseWordsInString {
-    public static String reverseWords(String s) {
-        StringBuilder ans = new StringBuilder();
-        int j = 0;
-        for (int i = s.length() - 1; i >= 0; i--) {
-            if (s.charAt(i) == ' ') {
-                continue;
-            }
-            j = i;
-            while (i >= 0 && s.charAt(i) != ' ') {
+    public String reverseWords(String s) {
+
+        int n = s.length();
+        char ch[] = s.toCharArray();
+        char res[] = new char[n + 1];
+        int i = n - 1, idx = 0;
+        while (i >= 0) {
+            while (i >= 0 && ch[i] == ' ') {
                 i--;
             }
+
+            int j = i;
+
+            while (i >= 0 && ch[i] != ' ') {
+                i--;
+            }
+
+            for (int k = i + 1; k <= j; k++) {
+                res[idx++] = ch[k];
+                if (k == j) {
+                    res[idx++] = ' ';
+                }
+            }
+
+        }
+
+        return new String(res, 0, idx - 1);
+    }
+
+    public String reverseWordsWay2(String s) {
+
+        StringBuilder ans = new StringBuilder();
+        int j = 0;
+        // start traversing from end of the string
+        for (int i = s.length() - 1; i >= 0; i--) {
+            // find character other than space by decrementing i
+            if (s.charAt(i) == ' ')
+                continue;
+            // now i will be at character other than space
+            j = i;
+            // now find the space, if not found then keep decrementing i
+            while (i >= 0 && s.charAt(i) != ' ')
+                i--;
+            // now we have got the space after some characters other than space
+            // so we have a substring from i+1 to j+1 which has characters other than space
+            // so we'll append substring to ans and for 1 space we'll append ' '
             ans.append(s.substring(i + 1, j + 1)).append(' ');
         }
-        // return ans.deleteCharAt(ans.length() - 1).toString();
+        // delete last character from ans because we're appending one space at last
+        // or else we can use trim method which removes spaces from front and back of
+        // string
         return ans.toString().trim();
     }
 
-    // driver code
-    public static void main(String[] args) {
-        String s = "    sky   is blue        ";
-        System.out.println(reverseWords(s)); // "blue is sky"
-    }
 }
