@@ -8,11 +8,27 @@ package Binary_Search;
 /*
        * In brute force, take xor of all elements, xor will contain unique value and all duplicates get cancelled 
        * time complexity will be O(n) because traversal of all elements
+       * 
        * As array is sorted, go for binary search
        * length of array will always be odd then assume two parts in one part all the duplicates lies and in other part other duplicates except one
-       * if first part are all containing duplicates first instance of duplicate element is at even index and 2nd instance is at odd index 
-       * So if found the first and secode instance at its position then our single element will be at another part, then shrink the area with moving start to one step ahead of mid else first and second instances are not at their position then the single is present in this part only, so shrink area by shift high to mid
- */
+       * 
+       * 0 1 2 3 4 5 6 <- index
+       * 1 1 2 2 3 4 4 <- array elements
+       * 
+       * now see, mid element is at index 3, at its LHS its duplicate is present which is at index 2
+       * as we can see that single element is not present on LHS the pair starting at even index number and ending at odd index number
+       * 
+       * 0 1 2 3 4 5 6 <- index
+       * 3 1 1 2 2 4 4 <- array elements
+       * 
+       * now see in this example, mid element is again at index 3 but now that element's duplicate is now at RHS
+       * as single element is present on LHS we see that pair starting at odd index number and ending at even index number
+       * 
+       * so we can conclude that we have to check where the pair's duplicate element lies 
+       * if mid index is odd and it's duplicate is at left side or mid index is even and it's duplicate is at right side then we have to check on right side of mid 
+       * else we have check on left side of mid
+       * 
+       */
 
 public class SingleElementInSortedArray {
     public static int singleNonDuplicateBruteForce(int[] nums) {
