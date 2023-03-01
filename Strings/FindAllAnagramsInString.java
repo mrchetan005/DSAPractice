@@ -47,8 +47,8 @@ import java.util.*;
  */
 
 public class FindAllAnagramsInString {
-    private boolean areEqual(int[] a, int[] b) {
-        for (int i = 0; i < 123; i++) {
+    private static boolean isAnagram(int[] a, int[] b) {
+        for (int i = 0; i < 26; i++) {
             if (a[i] != b[i]) {
                 return false;
             }
@@ -56,40 +56,34 @@ public class FindAllAnagramsInString {
         return true;
     }
 
-    public List<Integer> findAnagrams(String s, String p) {
-        List<Integer> al = new ArrayList<>();
-        int[] freqP = new int[123];
+    public static List<Integer> findAnagrams(String s, String p) {
+        List<Integer> res = new ArrayList<>();
+        int[] pFreq = new int[26];
+        int[] sFreq = new int[26];
         for (char c : p.toCharArray()) {
-            freqP[c]++;
+            pFreq[c - 'a']++;
         }
-        int[] freqS = new int[123];
-        int l = 0, r = 0;
-        while (r < s.length()) {
-            freqS[s.charAt(r)]++;
-            if (r - l + 1 == p.length()) {
-                if (areEqual(freqP, freqS)) {
-                    al.add(l);
+        char[] str = s.toCharArray();
+        int l = 0, r = 0, n = str.length, m = p.length();
+        while (r < n) {
+            sFreq[str[r] - 'a']++;
+            if ((r - l + 1) == m) {
+                if (isAnagram(pFreq, sFreq)) {
+                    res.add(l);
                 }
-            }
-            if (r - l + 1 < p.length()) {
-                r++;
-            } else {
-                freqS[s.charAt(l)]--;
+                sFreq[str[l] - 'a']--;
                 l++;
-                r++;
             }
+            r++;
         }
-        return al;
+        return res;
     }
 
     // driver code
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        String s = sc.next();
-        String p = sc.next();
-        FindAllAnagramsInString obj = new FindAllAnagramsInString();
-        List<Integer> al = obj.findAnagrams(s, p);
-        System.out.println(al);
-        sc.close();
+        List<Integer> list = findAnagrams("cbaebabacd", "abc");
+        System.out.println(list);
+        List<Integer> list1 = findAnagrams("abab", "ab");
+        System.out.println(list1);
     }
 }
