@@ -40,12 +40,12 @@ public class spiralMatrix {
             // work of max row is over so get rid of it
             maxr--;
 
-            // min row traversal
+            // min column traversal
             for (int i = maxr; i >= minr && minc <= maxc; i--) {
                 ans.add(mat[i][minc]);
             }
 
-            // work of max column is over so get rid of it
+            // work of min column is over so get rid of it
             minc++;
         }
         return ans;
