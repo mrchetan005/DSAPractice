@@ -36,7 +36,8 @@ import java.util.*;
  */
 
 public class MergeIntervals {
-    // tc => O(n log(n)) + O(n) ~ O(n log(n)) & sc => O(n^2)
+    // space for ans is not concidered here
+    // tc => O(n log(n)) + O(n) ~ O(n log(n)) & sc => O(1)
     public static int[][] merge(int[][] intervals) {
         List<int[]> ans = new ArrayList<>();
 
@@ -64,11 +65,54 @@ public class MergeIntervals {
         return ans.toArray(new int[0][]);
     }
 
+    public static int[][] mergeIntervals(int[][] intervals) {
+        // space for ans is not concidered here
+        // tc => O(n) & sc => O(k) where k is constant value of (max-min+1)
+        List<int[]> ans = new ArrayList<>();
+
+        if (intervals.length == 0 || intervals == null) {
+            return ans.toArray(new int[0][]);
+        }
+
+        // find range of min and max of start interval
+        int min = Integer.MAX_VALUE, max = Integer.MIN_VALUE;
+        for (int[] i : intervals) {
+            min = Math.min(min, i[0]);
+            max = Math.max(max, i[0]);
+        }
+        // create array of length max-min+1
+        int[] range = new int[max - min + 1];
+        // update start interval index with max of end interval
+        for (int[] i : intervals) {
+            range[i[0] - min] = Math.max(range[i[0] - min], i[1]);
+        }
+        int start = min, end = min;
+        for (int i = 0; i <= max - min; i++) {
+            // if range has valid interval, value will not be 0
+            if (range[i] != 0) {
+                // i+min for adjustment because range is max-min
+                if (i + min <= end) {
+                    // keep updating the end value with max end interval
+                    end = Math.max(end, range[i]);
+                } else {
+                    // if we get bigger value then we've found one intervals range
+                    ans.add(new int[] { start, end });
+                    // reset the start and end
+                    start = i + min;
+                    end = range[i];
+                }
+            }
+        }
+        ans.add(new int[] { start, end });
+        return ans.toArray(new int[0][]);
+    }
+
     // driver code
     public static void main(String[] args) {
         int[][] intervals = { { 1, 3 }, { 1, 4 }, { 2, 6 }, { 15, 18 }, { 8, 10 } };
 
         int[][] mergedIntervals = merge(intervals);
+        int[][] mergedInterval = mergeIntervals(intervals);
 
         for (int i = 0; i < mergedIntervals.length; i++) {
             for (int j = 0; j < mergedIntervals[0].length; j++) {
@@ -76,6 +120,12 @@ public class MergeIntervals {
             }
             System.out.print("  ");
         }
-
+        System.out.println();
+        for (int i = 0; i < mergedIntervals.length; i++) {
+            for (int j = 0; j < mergedIntervals[0].length; j++) {
+                System.out.print(mergedInterval[i][j] + " ");
+            }
+            System.out.print("  ");
+        }
     }
 }
