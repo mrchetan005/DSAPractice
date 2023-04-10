@@ -59,7 +59,6 @@ public class InversionCount {
     }
 
     public static void mergeSort(long[] arr, long[] temp, int start, int mid, int end) {
-        // long[] temp = new long[end - start + 1];
         int i = start, j = mid + 1, k = start;
         while (i <= mid && j <= end) {
             if (arr[i] <= arr[j]) {
