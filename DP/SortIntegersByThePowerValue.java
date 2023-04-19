@@ -22,6 +22,7 @@ public class SortIntegersByThePowerValue {
     }
 
     public static int getKth(int lo, int hi, int k) {
+        // tc => O(n^2) & sc => O(n^2)
         int[][] powers = new int[hi - lo + 1][2];
         for (int i = 0; i < powers.length; i++) {
             powers[i][0] = lo;
