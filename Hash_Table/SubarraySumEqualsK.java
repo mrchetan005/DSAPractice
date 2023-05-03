@@ -1,4 +1,4 @@
-package Arrays.hash_table;
+package Hash_Table;
 
 import java.util.*;
 

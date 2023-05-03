@@ -90,6 +90,21 @@ public class Sort012 {
         a[j] = t;
     }
 
+    public static void sort01(int[] arr) {
+        // tc => O(n) & sc => O(1)
+        int i = 0, j = arr.length - 1;
+        while (i < j) {
+            if (arr[i] == 0) {
+                i++;
+            } else if (arr[j] == 1) {
+                j--;
+            } else {
+                arr[i++] = 0;
+                arr[j--] = 1;
+            }
+        }
+    }
+
     // driver code
     public static void main(String[] args) {
         int[] arr = { 0, 1, 0, 2, 2, 0, 1, 0, 2 };
@@ -98,5 +113,9 @@ public class Sort012 {
         sort012CountingSort(nums);
         System.out.println(Arrays.toString(arr));
         System.out.println(Arrays.toString(nums));
+
+        int[] arr01 = { 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0 };
+        sort01(arr01);
+        System.out.println(Arrays.toString(arr01));
     }
 }
