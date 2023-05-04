@@ -16,6 +16,7 @@ public class LongestSubarrayWithNDistinctElements {
     public static int[] longestSubarray(int[] arr, int k) {
         int left = 0, maxLength = 0, n = arr.length, start = 0, end = 0;
         Map<Integer, Integer> freqMap = new HashMap<>();
+
         for (int right = 0; right < n; right++) {
             freqMap.put(arr[right], freqMap.getOrDefault(arr[right], 0) + 1);
             while (freqMap.size() > k) {
