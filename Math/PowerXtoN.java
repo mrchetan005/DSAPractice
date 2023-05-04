@@ -1,4 +1,4 @@
-package Arrays;
+package Math;
 
 /*
         * LEETCODE: Pow(x, n)
