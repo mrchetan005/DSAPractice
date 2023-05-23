@@ -67,8 +67,9 @@ public class TopKFrequentElements {
         // add k num in result array
         int res[] = new int[k];
         for (int i = max_freq; i >= 0; i--) {
-            if (bucket[i] == null)
+            if (bucket[i] == null) {
                 continue;
+            }
             for (int num : bucket[i]) {
                 if (k == 0) {
                     break;
